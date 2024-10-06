@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Калькулятор</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="container calculator-container">
+    <h2 class="text-center mb-4">Калькулятор</h2>
+
+    <!-- Кнопка выхода -->
+    <p class="mt-3 text-center">
+        <a href="/auth/logout" class="btn btn-danger">Выйти из аккаунта</a>
+    </p>
+
+    <!-- Кнопка перехода к конвертеру -->
+    <p class="mt-3 text-center">
+        <a href="/main/converter" class="btn btn-primary">Перейти к конвертеру</a>
+    </p>
+
+    <form action="/main/calculate" method="post">
+        <div class="form-group">
+            <label for="num1">Число 1:</label>
+            <input type="number" class="form-control" id="num1" name="num1" placeholder="Введите первое число" required>
+        </div>
+
+        <div class="form-group">
+            <label for="num2">Число 2:</label>
+            <input type="number" class="form-control" id="num2" name="num2" placeholder="Введите второе число" required>
+        </div>
+
+        <div class="form-group">
+            <label for="operation">Операция:</label>
+            <select id="operation" name="operation" class="form-control">
+                <option value="add">Сложение (+)</option>
+                <option value="subtract">Вычитание (-)</option>
+                <option value="multiply">Умножение (*)</option>
+                <option value="divide">Деление (/)</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-dark">Рассчитать</button>
+    </form>
+
+    <div class="result mt-4">
+        <h4>Результат:</h4>
+        <p th:text="${result}"></p>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6Hty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+
+<script>
+        let timeout;
+
+        function startSessionTimer() {
+            timeout = setTimeout(function() {
+                alert('Ваша сессия завершена из-за бездействия!');
+                window.location.href = "/auth/logout";
+            }, 5000);
+        }
+
+        document.onmousemove = resetTimer;
+        document.onkeypress = resetTimer;
+
+        function resetTimer() {
+            clearTimeout(timeout);
+            startSessionTimer();
+        }
+
+        startSessionTimer();
+
+</script>
+</body>
+</html>
